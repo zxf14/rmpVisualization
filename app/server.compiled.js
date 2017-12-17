@@ -71,8 +71,8 @@ apiProxy.on('error', function (err, req, res) {
     res.status(500).send('Something went wrong. And we are reporting a custom error message.');
 });
 
-app.all('/xinzhu/*', function (req, res) {
-    apiProxy.web(req, res, { target: 'http://120.27.244.237/' });
+app.all('/test/*', function (req, res) {
+    apiProxy.web(req, res, { target: 'http://localhost:8080/' });
 });
 
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
