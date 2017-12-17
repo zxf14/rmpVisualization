@@ -50,7 +50,7 @@ class ExamInfo extends React.Component {
         
         return (
             <div>
-                <h4>考试名：{this.props.title}</h4>
+                <h4>考试名：{this.state.exam.title}</h4>
                 {
                     this.state.exam.questions 
                     && 
@@ -80,14 +80,9 @@ class ExamInfo extends React.Component {
 }
 
 function mapStatetoProps(state, props) {
-    console.log(state);
-    const exam = state.examList.items.filter((v)=>{
-        return v.id == props.params.examId
-    })[0];
-    const title = exam.title;
   
     return {
-        title,
+
     };
 }
 

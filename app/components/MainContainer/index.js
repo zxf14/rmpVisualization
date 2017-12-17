@@ -35,7 +35,7 @@ class MainContainer extends React.Component {
                 />
                 <div className="x-container">
                     <Sidebar />
-                    <div className="x-page-container">
+                    <div className="x-page-container" style={{minWidth: 700}}>
                         {this.props.children}
                     </div>
                 </div>

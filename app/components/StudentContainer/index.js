@@ -31,7 +31,7 @@ class StudentContainer extends React.Component {
                     appname={window.localStorage.appname}
                     logo={window.localStorage.logo}
                 />
-                <div className="x-container">
+                <div className="x-container" style={{minWidth: 800}}>
                     {this.props.children}
                 </div>
             </div>

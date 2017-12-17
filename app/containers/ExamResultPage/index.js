@@ -1,8 +1,10 @@
 import React from 'react';
 import Card from '../../components/Card'
 import { connect } from 'react-redux';
+import {Link} from 'react-router';
 import {xinzhuToaster} from '../../components/Toaster/actions';
 import xinzhuInfo from '../../components/Toaster/info';
+import { LOGIN_TYPE } from '../Login'
 const QUIZ_INDEX = ['A', 'B', 'C', 'D']
 const QUIZ_TYPE = ['单选题', '多选题']
 
@@ -12,6 +14,7 @@ class ExamResultPage extends React.Component {
         super(props);
 
         this.state={
+            isFetching: true,
         	exam: {}
         }
     }
@@ -46,7 +49,8 @@ class ExamResultPage extends React.Component {
                             }));
                         } else {
                             this.setState({
-                                exam: json.data.exam
+                                exam: json.data.exam,
+                                isFetching: false,
                             });
                         }
                     });
@@ -56,16 +60,33 @@ class ExamResultPage extends React.Component {
             .catch(error => console.log(error));
     };
 
+    _isStudent = () =>{
+        return window.localStorage.userType == LOGIN_TYPE.STUDENT
+    }
+
     render(){
+        if(this.state.isFetching){
+            return null;
+        }
     	let totalScore = 0;
     	if(this.state.exam.answers){
     		totalScore = this.state.exam.answers.length!=0 ? this.state.exam.answers.reduce((i,j)=>i.score+j.score):0;
     	}
         let answers = this.state.exam.answers;
 
+    	console.log(this.state.exam);
+
+    	const student = this.state.exam.studentVOS;
+
         return (
             <div style={{ width: '100%', padding: 30}}>
-                <h1>学生考试成绩</h1>
+                {this._isStudent() &&
+                    <Link to={`/student`}>返回考试列表</Link>
+                }
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                    <div style={{fontSize: this._isStudent() ? '2em': '18px'}}>{this.state.exam.title}成绩</div>
+                    <h4>{student.name} {student.studentNo} {student.mail}</h4>
+                </div>
                 {
                 	this.state.exam.questions && this.state.exam.questions.map((question, index)=> {
                         let title = `${index+1}.(${this.state.exam.value[index]}分) ${QUIZ_TYPE[question.type]} 得分：${answers[index]?answers[index].score:0}` 
@@ -91,9 +112,10 @@ class ExamResultPage extends React.Component {
     }
 }
 
-function mapStatetoProps(state) {
- 
+function mapStatetoProps(state, props) {
+
     return {
+
     };
 }
 
