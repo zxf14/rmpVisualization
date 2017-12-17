@@ -59,7 +59,7 @@ class ExamPaperList extends React.Component {
                              <div id={`paper-${student.studentNo}`}>
                              <Card title={title}>
                                  {v.questions && v.questions.map((question,index)=>{
-                                     let title = `${index+1}.(${v.value[index]}分) ${QUIZ_TYPE[question.type]} 得分：${v.answers[index]?v.answers[index].score:0}`
+                                     let title = `${index+1}.(${v.value}分) ${QUIZ_TYPE[question.type]} 得分：${v.answers[index]?v.answers[index].score:0}`
                                      return (
                                          <Card title={title}>
                                              <div></div>

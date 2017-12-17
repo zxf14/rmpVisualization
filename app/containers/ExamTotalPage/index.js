@@ -35,6 +35,7 @@ class ExamTotalPage extends React.Component {
             remain: '', //剩余时间
 
             questionList: [],
+            isSubmit: false,
         }
     }
 
@@ -151,8 +152,10 @@ class ExamTotalPage extends React.Component {
     };
 
     handleSubmit(){
-        console.log('submit');
-        const { quizList } = this.state;
+        const { quizList,isSubmit } = this.state;
+        this.setState({
+            isSubmit:true
+        })
         let submitList = [];
         for(let i = 0; i < quizList.length; i++){
             const quiz = quizList[i];
@@ -182,8 +185,6 @@ class ExamTotalPage extends React.Component {
             }
             submitList.push(submitQuiz);
         }
-
-        console.log(submitList)
 
         fetch(`/test/exam/submit?testeeId=${this.props.testeeId}`,{
             credentials: 'include',
@@ -300,7 +301,8 @@ class ExamTotalPage extends React.Component {
     }
 
     render(){
-        const { pageType, quizList, chooseQuestionKey,remain, title } = this.state;
+        const { pageType, quizList, chooseQuestionKey,remain, title, isSubmit } = this.state;
+
         let question = null;
         if(pageType==PAGE_TYPE.SINGLE){
             question = quizList[chooseQuestionKey].question;
@@ -372,7 +374,7 @@ class ExamTotalPage extends React.Component {
                                         })}
                                     </div>
                                 </div>
-                                <Button onClick={this.handleSubmit.bind(this)}>提交</Button>
+                                <Button onClick={this.handleSubmit.bind(this)} disabled={!!isSubmit}>{isSubmit ? '正在提交': '提交'}</Button>
                             </div>
                             :
                             <div className={styles.singleContainer}>
