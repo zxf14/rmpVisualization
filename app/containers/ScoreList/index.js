@@ -24,7 +24,7 @@ class ScoreList extends React.Component {
     }
 
     exportReport = () => {
-
+        browserHistory.push(`/teacher/course/${this.props.params.courseId}/paperList/${this.props.params.examId}`)
     };
 
     getScoreList = ()=>{

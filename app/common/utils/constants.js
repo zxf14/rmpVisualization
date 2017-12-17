@@ -11,3 +11,7 @@ export const QUESTION_TYPE = {
 }
 
 export const QUIZ_INDEX = ['A', 'B', 'C', 'D']
+
+export const QUIZ_TYPE = ['单选题','多选题']
+
+export const EXAM_STATE_INDEX = [EXAM_STATE.NOT_START, EXAM_STATE.ONGOING, EXAM_STATE.FINISHED, EXAM_STATE.SUBMITED]

@@ -134,8 +134,8 @@ class Questions extends React.Component {
                 { this.state.questionList.length === 0 && <h5>没有试题</h5>}
                 {
                     this.state.questionList.length !== 0 &&
-                    <div>
-
+                    <Card>
+                        <div>tip：红色标注为正确答案</div>
                         <Table id="questions" title="试题列表">
                             <TableHeader>
                                 <TableRow header={true}>
@@ -157,7 +157,7 @@ class Questions extends React.Component {
                                                 <TableRowColumn>{QUESTION_TYPE[question.type]}</TableRowColumn>
                                                 {
                                                     question.optionVOList.map(item => {
-                                                        return  <TableRowColumn>{item.content}</TableRowColumn>
+                                                        return  <TableRowColumn className={item.isRight?"right-answer":""}>{item.content}</TableRowColumn>
                                                     })
                                                 }
                                             </TableRow>
@@ -166,7 +166,7 @@ class Questions extends React.Component {
                                 }
                             </TableBody>
                         </Table>
-                    </div>
+                    </Card>
                 }
 
             </div>

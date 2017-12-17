@@ -13,6 +13,7 @@ import Course from './containers/Course';
 import ExamInfo from './containers/ExamInfo';
 import ExamRelease from './containers/ExamRelease';
 import Questions from './containers/Questions';
+import ExamPaperList from './containers/ExamPaperList'
 /*学生相关*/
 import StudentContainer from './components/StudentContainer';
 import ExamList from './containers/ExamList';
@@ -38,6 +39,7 @@ export default (
                 <Route path=":courseId/examRelease" component={ExamRelease}/>
                 <Route path=":courseId/result/:examId/:studentId" component={ExamResultPage}/>
                 <Route path=":courseId/scoreList/:examId" component={ScoreList}/>
+                <Route path=":courseId/paperList/:examId" component={ExamPaperList}/>
             </Route>
             
             <Route path="*" component={NotFound}/>
