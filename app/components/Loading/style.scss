@@ -1,0 +1,69 @@
+.xinzhu-loading{
+    position: relative;
+    min-width: 20px;
+    min-height: 20px;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+    text-align: center;
+    font-style: normal;
+    display: inline-block;
+    vertical-align: middle;
+
+
+    .loading-logo{
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        margin: 0 auto;
+        border-style: solid;
+        border-width: 5px;
+        border-color: #3dc6b6 #3dc6b6 #3dc6b6 #fff;
+        -webkit-animation: xinzhu-loading 1.1s infinite linear;
+        animation: xinzhu-loading 1.1s infinite linear;
+    }
+
+    &.large .loading-logo{
+        width: 40px;
+        height: 40px;
+    }
+
+    &.normal .loading-logo{
+        width: 30px;
+        height: 30px;
+    }
+
+    &.small .loading-logo{
+        width: 20px;
+        height: 20px;
+    }
+    &.block{
+        display: block;
+    }
+
+}
+
+.hidden{
+    display: none;
+}
+
+@-webkit-keyframes xinzhu-loading {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes xinzhu-loading {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}

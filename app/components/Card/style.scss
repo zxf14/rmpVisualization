@@ -1,0 +1,31 @@
+.card {
+  background: white;
+  @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  @include transition(all 0.4s ease-in-out);
+  @include border-radius(1px);
+  margin-bottom: 1em;
+
+  &:hover {
+    @include box-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
+    @include transform(translateY(-2px));
+    @include transition(all 0.4s ease-in-out);
+  }
+
+  .card-title {
+    padding: 0.5em 1em;
+    overflow: hidden;
+    cursor: pointer;
+    span {
+      font-weight: bold;
+      float: left;
+    }
+    i {
+      float: right;
+    }
+  }
+
+  .card-content {
+    padding: 1em;
+  }
+
+}

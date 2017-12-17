@@ -1,0 +1,34 @@
+html,
+body,
+#app {
+  height: 100%;
+}
+
+html {
+  font-family: "Avenir Next", Avenir, "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Source Han Sans SC", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+}
+
+body {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+.flex-container {
+
+  display: flex;
+
+  main {
+    flex: auto;
+    margin-right: 32px;
+  }
+
+  aside {
+    flex: none;
+    width: 240px;
+  }
+
+}

@@ -1,0 +1,7 @@
+/node_modules
+/npm-debug.log
+*DS_Store
+/.idea
+/app/.vscode/
+app/public/js/app.js
+app/public/css/style.css

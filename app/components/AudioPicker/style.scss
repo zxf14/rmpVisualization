@@ -1,0 +1,47 @@
+.audio-picker {
+  width: 600px;
+
+  .modal-header {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .modal-body {
+    padding: 0;
+
+    .nav-tabs {
+      padding: 0 16px;
+      margin-top: 16px;
+    }
+
+
+    .upload-panel {
+      padding: 16px;
+      height: 360px;
+      overflow-y: auto;
+
+      #container {
+        text-align: center;
+
+        #pickAudio {
+          margin-left: 400px;
+        }
+
+      }
+
+    }
+
+    .url-panel {
+      padding: 16px;
+      height: 360px;
+      overflow-y: auto;
+
+      #audio-confirm-btn {
+        margin-top: 10px;
+      }
+
+    }
+
+  }
+
+}

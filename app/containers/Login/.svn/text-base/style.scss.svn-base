@@ -1,0 +1,137 @@
+.m-auth-mid-container {
+
+  width: 100%;
+  height: 650px;
+  padding: 56px 0 0;
+  background: url("/assets/img/login-background.png") no-repeat;
+  background-size: 100% 100%;
+
+  .m-auth-mid {
+    width: 400px;
+    margin: 0 auto;
+
+    .form-container {
+      padding: 0 42px;
+      margin-top: 64px;
+
+      .form {
+        background: white;
+        padding: 18px 30px 13px;
+        border-radius: 5px;
+        color: #9e8f7c;
+
+        h2 {
+          margin: 0;
+          font-size: 24px;
+          font-weight: 300;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #eeeae3;
+        }
+
+        a {
+          color: #9e8f7c;
+        }
+
+        .form-group {
+          margin: 12px 0;
+          display: flex;
+          align-items: center;
+
+          button {
+            width: 100px;
+            margin: 0 0 0 6px;
+            line-height: 28px;
+          }
+
+          label {
+            font-size: 17px;
+            width: 70px;
+          }
+
+          input {
+            flex: auto;
+            width: 10px;
+            border-radius: 5px;
+            padding: 6px 10px;
+            border: none;
+            outline: none;
+            background-color: rgba(192, 167, 132, 0.1);
+            color: #9e8f7c;
+
+            &:hover {
+              background-color: rgba(192, 167, 132, 0.35);
+            }
+          }
+
+          button {
+            //width: 100px;
+          }
+
+        }
+
+        .form-action {
+          display: flex;
+          justify-content: space-between;
+          margin: 16px 0;
+
+          input[type='checkbox'] {
+            outline: none;
+            opacity: 0.8;
+            margin-right: 9px;
+          }
+        }
+
+        button {
+          width: 100%;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          background: #ccb397;
+          color: #f6f2eb;
+          font-size: 13px;
+          line-height: 24px;
+          border-radius: 3px;
+          margin: 0 0 12px;
+
+          &:hover {
+            background: #b09a82;
+          }
+        }
+
+        .right-floated {
+          overflow: hidden;
+          a {
+            float: right;
+
+            i {
+              margin-left: 5px;
+            }
+          }
+        }
+
+        .button-group {
+          text-align: center;
+
+          button {
+            width: 60px;
+            font-size: 12px;
+            margin: 0 10px;
+          }
+
+          button.strong {
+            color: white;
+            background: #EA7161;
+          }
+
+          button.weak {
+            color: #c3a988;
+            background: #e9ddce;
+          }
+
+        }
+
+      }
+    }
+
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "domain": "http://localhost",
+  "port": 3009,
+  "viewRoot": "view",
+  "staticFolderMount": "/assets",
+  "staticFolders": ["public"],
+  "compressionThreshold": 512,
+  "maxAge": 36000
+}

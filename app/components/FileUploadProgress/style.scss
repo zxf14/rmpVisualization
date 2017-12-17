@@ -1,0 +1,57 @@
+.file-progress-wrapper {
+
+  width: 100%;
+  height: 70px;
+  margin: 10px 0;
+  background: white;
+  position: relative;
+
+  .progress-bar {
+    height: 100%;
+    background: rgba(31, 81, 246, 0.05);
+  }
+
+  .progress-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      font-size: 28px;
+      line-height: 40px;
+      text-align: center;
+      color: #494f80;
+      margin: 15px 30px 15px 15px;
+      float: left;
+    }
+
+    .text {
+      float: left;
+
+      .name {
+        margin: 10px 0 0;
+        font-size: 16px;
+        line-height: 25px;
+      }
+
+      .speed {
+        margin: 0 0 10px;
+        font-size: 12px;
+        line-height: 25px;
+      }
+
+    }
+
+  }
+
+  .close {
+    position: absolute;
+    right: 20px;
+    top: 25px;
+    outline: none;
+  }
+
+
+}

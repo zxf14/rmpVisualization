@@ -1,0 +1,36 @@
+.toaster-container {
+  position: fixed;
+  top: 90px;
+  left: 50%;
+  @include transform(translateX(-50%));
+  z-index: 9999;
+  padding: 16px 21px;
+  background-color: #fefdfc;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 0 rgba(187, 179, 168, 0.5);
+  text-align: center;
+  display: none;
+
+  p {
+    font-size: 20px;
+    margin: 0;
+
+    i {
+      font-size: 20px;
+      margin-right: 9px;
+    }
+  }
+
+  p.success {
+    color: #a7c9ae;
+  }
+
+  p.error {
+    color: #c97f77;
+  }
+
+  p.warning {
+    color: #ff930e;
+    margin: 0;
+  }
+}

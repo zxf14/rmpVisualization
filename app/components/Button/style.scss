@@ -1,0 +1,31 @@
+.button {
+  border: none;
+  outline: none;
+  background-color: deeppink;
+  color: white;
+  text-align: center;
+  padding: 0.4em 1.2em;
+  border-radius: 2px;
+  @include box-shadow(0 0 5px 1px rgba(0, 0, 0, 0.15));
+}
+
+.fab {
+  background: deeppink;
+  border-radius: 50%;
+  display: block;
+  width: 5rem;
+  height: 5rem;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 1.6rem;
+  outline: none;
+  @include box-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  @include transition(all 0.2s ease-in);
+
+  &:hover {
+    @include transform(translateY(-3px));
+    @include box-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    @include transition(all 0.2s ease-in);
+  }
+}

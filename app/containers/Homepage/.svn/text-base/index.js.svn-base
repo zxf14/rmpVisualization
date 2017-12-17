@@ -1,0 +1,59 @@
+import React from 'react';
+import MidNavbar from '../../components/MidNavbar';
+import Navigation from '../../components/Navigation';
+import Swiper from '../../components/Swiper';
+import BusinessCard from '../../components/BusinessCard';
+import SuggestionCard from '../../components/SuggestionCard';
+import AwardCard from '../../components/AwardCard';
+import CoursewareList from '../../components/CoursewareList';
+import IndexFooter from '../../components/IndexFooter';
+import FloatSider from '../../components/FloatSider';
+
+
+export default class Index extends React.Component {
+
+    componentDidMount() {
+        $(".select2").select2();
+    }
+
+    render() {
+        return (
+            <div className="page-container">
+                <FloatSider />
+                <div className="m-page-header">
+                    <MidNavbar />
+                    <div className="slidebox">
+                        <Navigation />
+                        <div className="center-col">
+                            <Swiper />
+                            <div style={{display: "flex", padding: "0 8px"}}>
+                                <BusinessCard
+                                    link="/"
+                                    image="http://7xpcat.com1.z0.glb.clouddn.com/%E6%97%A5%E8%AF%AD%E9%9F%A9%E8%AF%AD_2901466928772654.jpg?e=3614412420&token=hdZdapjcdEK2vbVKTo--ETEciepTc9Eqs12BKS7T:8SPfwIleSzpqHe2VQFqnaVLVHP8="
+                                />
+                                <BusinessCard
+                                    link="/"
+                                    image="http://7xpcat.com1.z0.glb.clouddn.com/banner_3.jpg?e=3613239977&token=hdZdapjcdEK2vbVKTo--ETEciepTc9Eqs12BKS7T:ZhMhMIy_JVXJ93YU8glyI0k24As="
+                                />
+                                <BusinessCard
+                                    link="/"
+                                    image="http://7xpcat.com1.z0.glb.clouddn.com/banner3_1.png?e=3612246731&token=hdZdapjcdEK2vbVKTo--ETEciepTc9Eqs12BKS7T:HMA5oEz5WEo0HsqLy5XWI7dHi28="
+                                />
+                            </div>
+                        </div>
+                        <div className="right-col">
+                            <SuggestionCard />
+                            <AwardCard />
+                        </div>
+                    </div>
+                </div>
+                
+                <CoursewareList />
+                <CoursewareList />
+                <CoursewareList />
+                
+                <IndexFooter />
+            </div>
+        )
+    }
+}

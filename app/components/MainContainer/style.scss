@@ -1,0 +1,27 @@
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .x-navbar {
+    flex: none;
+  }
+
+  .x-container {
+    flex: auto;
+    display: flex;
+
+    .x-sidebar {
+      flex: none;
+    }
+
+    .x-page-container {
+      flex: auto;
+      overflow: auto;
+      padding: 32px 16px;
+    }
+
+
+  }
+
+}

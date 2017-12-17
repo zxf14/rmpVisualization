@@ -1,0 +1,134 @@
+.table-container {
+
+  background: white;
+  @include box-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  @include border-radius(1px);
+
+  .table-container-header,
+  .table-container-footer {
+
+    padding: 1.2rem 1.6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+
+  .table-container-header {
+
+    background: rgba(173, 216, 230, 0.3);
+
+    h4 {
+      color: #00b3ee;
+      font-weight: bold;
+      font-size: 1.7rem;
+    }
+
+    .search {
+      outline: none;
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+      padding: 6px 0;
+    }
+
+  }
+
+  .table-container-footer {
+    > .pagination {
+      margin: 0;
+    }
+  }
+
+  table {
+
+    tr {
+      border-bottom: 1px solid rgba(103, 103, 103, 0.1);
+      @include transition(all 0.2s ease);
+
+      &:hover {
+        background-color: #eee;
+      }
+
+      &.selected {
+        background-color: #eee;
+      }
+
+    }
+
+    th {
+      border: none !important;
+      color: #919191;
+      font-weight: normal;
+      font-size: 1.2rem;
+      line-height: 2.4rem !important;
+      padding: 1.2rem 1.6rem !important;
+      cursor: pointer;
+
+      .fa {
+        margin-left: 4px;
+      }
+
+    }
+
+    td {
+      border: none !important;
+      padding: 1.2rem 1.6rem !important;
+      font-size: 1.3rem;
+
+      &.secondary a {
+        color: #4CAF50;
+      }
+
+      &.primary a {
+        color: deeppink;
+      }
+
+      .fa {
+        color: grey;
+        font-size: 1.4rem;
+      }
+
+
+      .actions {
+        a {
+          padding: 0 7px;
+          border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        a:last-child {
+          border-color: transparent;
+        }
+      }
+
+    }
+
+
+  }
+
+}
+
+.myTable {
+
+  background: white;
+  border-radius: 2px;
+  padding: 1rem;
+  @include box-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+
+  .table {
+    margin: 0;
+
+    td {
+      border-top: none !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+      padding: 1rem !important;
+      font-size: 1.4rem !important;
+      color: rgba(0, 0, 0, 0.6) !important;
+    }
+
+    tr:last-child td {
+      border-bottom: none !important;
+    }
+
+  }
+
+}

@@ -1,0 +1,160 @@
+.x-videoPlayer {
+  $primary-color: #e74c3c;
+  position: relative;
+  overflow: hidden;
+  margin: 20px 0;
+  background-color: black;
+
+
+  &.invalid {
+    width: 0;
+    height: 0;
+  }
+
+
+  video {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+
+  video::-webkit-media-controls {
+    display:none !important;
+  }
+
+  video::-webkit-media-controls-enclosure {
+    display:none !important;
+  }
+
+  .video-controls {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 5px;
+    z-index: 99;
+
+    &:hover {
+      .video-progress-node {
+        opacity: 1;
+        @include transition(all 0.2s linear);
+      }
+    }
+  }
+
+  .video-progress {
+    background-color: rgba(128, 128, 128, 0.8);
+    width: 100%;
+    height: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    position: relative;
+
+    .video-progress-buffer {
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.6);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .video-progress-bar {
+      height: 100%;
+      background-color: $primary-color;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .video-progress-node {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      position: absolute;
+      top: -2px;
+      background-color: white;
+      opacity: 0;
+      @include transition(all 0.2s linear);
+    }
+
+  }
+
+  .video-controller {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px 5px;
+
+    button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      color: white;
+    }
+
+    .group {
+      display: flex;
+      align-items: center;
+    }
+
+    .volume {
+      display: flex;
+      align-items: center;
+
+      .volume-content {
+        width: 60px;
+        overflow-x: hidden;
+        height: 5px;
+        background-color: rgba(128, 128, 128, 0.6);
+        cursor: pointer;
+        position: relative;
+
+        .volume-bar {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 5px;
+          background-color: $primary-color;
+        }
+      }
+    }
+
+    .video-timeline {
+      margin-left: 1rem;
+      span {
+        color: white;
+        font-size: 1rem;
+        line-height: 2rem;
+      }
+    }
+
+  }
+
+  .video-caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    .signal {
+      font-size: 0;
+      color: rgba(0, 0, 0, 0.8);
+      opacity: 1;
+
+      &.hidden {
+        display: block !important;
+        font-size: 15rem;
+        opacity: 0;
+        @include transition(all 0.6s linear);
+      }
+    }
+
+  }
+
+}

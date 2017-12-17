@@ -1,0 +1,54 @@
+.switch {
+
+  $main-color: #00BCD4;
+
+  width: 100%;
+
+  input[type=checkbox] {
+    position: absolute;
+    visibility: hidden;
+  }
+
+  label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .toggle-check {
+    background: #b6b6b6;
+    width: 35px;
+    height: 12px;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      position: absolute;
+      top: -4px;
+      left: -1px;
+      @include box-shadow(-1px 0 3px rgba(0, 0, 0, 0.15));
+      background-color: #eee;
+      @include transition(left 0.3s ease);
+    }
+
+  }
+
+  input[type=checkbox]:checked ~ .toggle-check {
+    background-color: rgba(0, 188, 212, 0.5);
+  }
+
+  input[type=checkbox]:checked ~ .toggle-check:before {
+    background-color: $main-color;
+    left: calc(100% - 20px);
+    @include transition(left 0.3s ease);
+  }
+
+
+}

@@ -1,0 +1,25 @@
+.x-info-table {
+
+  background: white;
+  border-radius: 2px;
+  padding: 1rem;
+  @include box-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+
+  .table {
+    margin: 0;
+
+    td {
+      border-top: none !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+      padding: 1rem !important;
+      font-size: 1.4rem !important;
+      color: rgba(0, 0, 0, 0.6) !important;
+    }
+
+    tr:last-child td {
+      border-bottom: none !important;
+    }
+
+  }
+
+}

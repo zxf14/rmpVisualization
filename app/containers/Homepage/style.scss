@@ -1,0 +1,21 @@
+.course-title {
+    justify-content: space-between;
+    display: flex;
+    align-items: baseline;
+}
+.course-title h3{
+	flex-grow: 2;
+}
+
+.course-title a{
+	font-size: 18px;
+    padding: 10px;
+}
+.flex-container aside {
+    flex: none;
+    width: 240px;
+    margin-left: 20px;
+}
+.right-answer {
+	color: red;
+}

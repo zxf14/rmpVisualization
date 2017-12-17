@@ -1,0 +1,24 @@
+.page-container {
+  padding-top: 56px;
+  overflow-y: auto;
+
+  width: 100%;
+  margin: 0 auto;
+
+  .m-page-header {
+    width: 1224px;
+    margin: 0 auto;
+  }
+
+  .slidebox {
+    display: flex;
+    margin: 0 auto;
+
+    .right-col {
+
+    }
+
+  }
+
+
+}

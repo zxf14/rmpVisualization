@@ -1,0 +1,18 @@
+.search-input {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.6rem;
+  width: 300px;
+  vertical-align: top;
+  margin-right: 20px;
+  label {
+  	font-weight: 500;
+  	margin-right: 10px;
+  	height: 30px;
+  }
+  input {
+  	width: 200px;
+  	height: 30px;
+    text-indent: 5px;
+  }
+}

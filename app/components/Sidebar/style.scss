@@ -1,0 +1,94 @@
+.x-sidebar {
+  width: 200px;
+  padding-bottom: 10px;
+  background: #222D32;
+  overflow-y: auto;
+  @include transition(all 0.3s linear);
+
+  .sidebar-menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+
+      position: relative;
+      margin: 0;
+      padding: 0;
+
+      &:hover,
+      &.active {
+        > a {
+          background: #1E282C;
+          border-color: lightgreen;
+        }
+      }
+
+      > a {
+        color: white;
+        padding: 12px 5px 12px 15px;
+        border-left: 3px solid transparent;
+        display: block;
+        > .fa {
+          width: 20px;
+        }
+      }
+
+      .label,
+      .badge {
+        margin-top: 3px;
+        margin-right: 5px;
+      }
+
+      &.active {
+        > a > .fa-angle-left {
+          transform: rotate(-90deg);
+          @include transition(all 0.3s linear);
+        }
+      }
+    }
+
+    li.header {
+      padding: 10px 25px 10px 15px;
+      font-size: 12px;
+      background: #1A2226;
+      color: #4b646f;
+    }
+
+    li > a > .fa-angle-left {
+      width: auto;
+      height: auto;
+      padding: 0;
+      margin-right: 10px;
+    }
+
+    // Tree view menu
+    .treeview-menu {
+      display: none;
+      list-style: none;
+      margin:0;
+      padding: 0 0 0 5px;
+      background: #101618;
+
+      > li {
+        margin: 0;
+        > a {
+          color: #ababab;
+          padding: 5px 5px 5px 35px;
+          display: block;
+          font-size: 14px;
+          > .fa {
+            width: 20px;
+          }
+
+          &:hover {
+            color: white;
+          }
+
+        }
+      }
+    }
+
+  }
+
+}

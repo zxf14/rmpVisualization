@@ -1,0 +1,78 @@
+.fold-menu {
+
+  list-style: none;
+  padding: 0;
+  background: white;
+  @include box-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+
+  .action {
+    margin-left: 2rem;
+    display: inline-block;
+
+    a {
+      padding: 0.8rem;
+      font-size: 1.4rem;
+      color: rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        color: #29B6F6;
+      }
+    }
+
+    a+a {
+      margin-left: 0.4rem;
+    }
+
+  }
+
+  > li {
+
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    cursor: pointer;
+
+    span.name {
+      color: #29B6F6;
+    }
+
+  }
+
+  .treeview-menu {
+    display: none;
+    list-style: none;
+    padding: 1.4rem 1.4rem 1.4rem 3rem;
+    background: white;
+
+    input {
+      outline: 0;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 0.3rem 1rem;
+      border-radius: 10px;
+    }
+
+    li {
+      padding: 1.4rem 1rem 1.4rem 3rem;
+      color: rgba(0, 0, 0, 0.6);
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    li:nth-child(1) {
+      display: none;
+    }
+
+    li:nth-child(n+2) input {
+      display: none;
+    }
+
+
+  }
+
+
+}

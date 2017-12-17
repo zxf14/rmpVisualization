@@ -1,0 +1,202 @@
+import React from 'react';
+import {connect} from 'react-redux';
+import {browserHistory, Link} from 'react-router';
+import MD5 from 'crypto-js/md5';
+import fetch from 'isomorphic-fetch'
+
+import {meboxToaster} from '../../components/Toaster/actions';
+import meboxInfo from '../../components/Toaster/info';
+import ThirdPartyAuth from '../../components/ThirdPartyAuth';
+import LoginFooter from '../../components/LoginFooter';
+
+class Login extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            phone: "",
+            password: "",
+            remember: false,
+            nonce: "",
+            realm: "",
+            opaque: ""
+        };
+    }
+
+    getQuery = (string, name) => {
+        var reg = new RegExp(name + '=".*?"');
+        var result = string.match(reg)[0];
+        result = result.substr(name.length + 2);
+        return result.substr(0, result.length - 1);
+    };
+
+    componentDidMount() {
+        // 登录初始化
+        fetch('/api/Home/User/login', {
+            method: 'post',
+            credentials: 'include'
+        }).then(response => {
+            if (response.status == "401") {
+                var auth = response.headers.get("WWW-Authorization");
+                this.setState({
+                    nonce: this.getQuery(auth, "nonce"),
+                    realm: this.getQuery(auth, 'realm'),
+                    opaque: this.getQuery(auth, 'opaque')
+                });
+            } else {
+                this.props.dispatch(meboxToaster({
+                    type: 2,
+                    content: meboxInfo.server.commonError
+                }));
+            }
+        });
+
+        // 将记住的密码填充
+        var storage = window.localStorage;
+        var getIsStorePhone = storage["isStorePhone"];
+        if ("yes" == getIsStorePhone) {
+            var userName = storage['phone_number'];
+            if (userName != null && userName != "") {
+                this.setState({
+                    phone: userName,
+                    remember: true
+                });
+            }
+        }
+    }
+
+    _handleLogin = (e) => {
+        e.preventDefault();
+
+        // 判断是否存在中文
+        var rname = /[\u4E00-\u9FA5]/;
+        if (rname.test(this.state.phone)) {
+            this.props.dispatch(meboxToaster({
+                type: 1,
+                content: meboxInfo.auth.phoneCanNotBeChinese
+            }));
+            this.setState({phone: "", password: ""});
+            return false;
+        }
+
+        // 判断用户名或密码是否为空
+        if (this.state.phone == "" || this.state.password == "") {
+            this.props.dispatch(meboxToaster({
+                type: 2,
+                content: meboxInfo.auth.phoneOrPasswdCanNotBeEmpty,
+            }));
+            this.setState({phone: "", password: ""});
+            return false;
+        }
+
+        // 判断是否记住手机号
+        var storage = window.localStorage;
+        if (this.state.remember) {
+            storage['isStorePhone'] = "yes";
+            storage['phone_number'] = this.state.phone;
+        } else {
+            storage['isStorePhone'] = "no";
+            storage.removeItem("phone_number");
+        }
+
+        var h1 = MD5(`${this.state.phone}:${this.state.realm}:${MD5(this.state.password)}`);
+        var h2 = MD5("POST:/index.php/Home/User/login");
+        var response = MD5(`${h1}:${this.state.nonce}:${h2}`);
+        var Authorization = `Digest username="${this.state.phone}", realm="${this.state.realm}", nonce="${this.state.nonce}", uri="/index.php/Home/User/login", response="${response}", opaque="${this.state.opaque}"`;
+        fetch(`/api/Home/User/login`, {
+            method: 'post',
+            credentials: 'include',
+            headers: {
+                Authorization: Authorization
+            }
+        }).then(response => {
+            if (response.ok) {
+                response.json().then(data => {
+                    if (data.result == 0) {
+                        this.props.dispatch(meboxToaster({
+                            type: 2,
+                            content: meboxInfo.auth.phoneOrPasswdError
+                        }));
+                    } else {
+                        this.props.dispatch(meboxToaster({
+                            type: 1,
+                            content: meboxInfo.auth.loginSuccess
+                        }));
+                        storage["uid"] = data["id"];
+                        storage["name"] = data["name"];
+                        storage["nickname"] = data["nickname"];
+                        storage["icon"] = data["icon"];
+                        setTimeout(function () {
+                            if (new Date().getTime() - storage['time'] < 100000) {
+                                window.location.href = storage['history'];
+                            } else {
+                                browserHistory.push("/");
+                            }
+                        }, 1000);
+                    }
+                });
+            } else if (response.status == 401) {
+                this.props.dispatch(meboxToaster({
+                    type: 2,
+                    content: meboxInfo.auth.phoneOrPasswdError
+                }));
+            } else {
+                this.props.dispatch(meboxToaster({
+                    type: 2,
+                    content: meboxInfo.server.commonError
+                }));
+            }
+        });
+
+    };
+
+    render() {
+        return (
+            <div className="m-auth-mid-container">
+                <div className="m-auth-mid">
+                    <div className="form-container">
+                        <div className="form">
+                            <h2>登录米盒</h2>
+                            <div className="form-group">
+                                <label htmlFor="phone">手机号</label>
+                                <input type="tel" id="phone" value={this.state.phone} autoComplete="off"
+                                       onChange={(e)=>this.setState({phone: e.target.value})}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">密码</label>
+                                <input type="password" id="psssword" value={this.state.password} autoComplete="off"
+                                       onChange={(e)=>this.setState({password: e.target.value})}
+                                />
+                            </div>
+                            <div className="form-action">
+                                <div className="checkbox">
+                                    <input type="checkbox" name="remember" id="remember" checked={this.state.remember}
+                                           onChange={(e) => this.setState({remember: !this.state.remember})}
+                                    />
+                                    <label htmlFor="remember">记住手机号</label>
+                                </div>
+                                <Link to="/password-reset">忘记密码?</Link>
+                            </div>
+                            <button onClick={this._handleLogin}>登录</button>
+                            <div className="right-floated">
+                                <a href="#">
+                                    <span>立即注册米盒</span>
+                                    <i className="fa fa-angle-double-right"/></a>
+                            </div>
+                        </div>
+                    </div>
+                    <ThirdPartyAuth />
+                    <LoginFooter />
+                </div>
+            </div>
+        )
+    }
+
+}
+
+function mapStatetoProps(state) {
+    return {};
+}
+
+export default connect(mapStatetoProps)(Login);
