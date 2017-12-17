@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-
+import {browserHistory} from 'react-router'
 import {xinzhuToaster} from '../../components/Toaster/actions';
 import xinzhuInfo from '../../components/Toaster/info';
 
@@ -41,15 +41,20 @@ export function fetchStudentExamList(studentNo){
         dispatch(requestStudentExamList());
 
         fetch(`/test/exam/getExamByStudentNo?studentNo=${studentNo}`, {credentials: 'include'})
-            .then(res=>res.json())
-            .then(json=>{
-                if(!json.success){
-                    this.props.dispatch(xinzhuToaster({
-                        type: 2,
-                        content: xinzhuInfo.operation.getListFail
-                    }))
-                }else{
-                    dispatch(receiveStudenetExamList(json.data.exam))
+            .then(response => {
+                if(response.status == 401){
+                    browserHistory.push("/login")
+                } else {
+                    response.json().then(json=>{
+                        if(!json.success){
+                            this.props.dispatch(xinzhuToaster({
+                                type: 2,
+                                content: xinzhuInfo.operation.getListFail
+                            }))
+                        }else{
+                            dispatch(receiveStudenetExamList(json.data.exam))
+                        }
+                    })
                 }
             })
     }

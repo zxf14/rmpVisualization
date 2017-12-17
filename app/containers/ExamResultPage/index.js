@@ -83,9 +83,11 @@ class ExamResultPage extends React.Component {
                 {this._isStudent() &&
                     <Link to={`/student`}>返回考试列表</Link>
                 }
-                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                    <div style={{fontSize: this._isStudent() ? '2em': '18px'}}>{this.state.exam.title}成绩</div>
-                    <h4>{student.name} {student.studentNo} {student.mail}</h4>
+                <div>
+                    <div style={{fontSize: this._isStudent() ? '2em': '18px', textAlign:'center'}}>{this.state.exam.title}成绩</div>
+                    <h4>姓名：{student.name}</h4>
+                    <h4>学号：{student.studentNo}</h4>
+                    <h4>邮箱：{student.mail}</h4>
                 </div>
                 {
                 	this.state.exam.questions && this.state.exam.questions.map((question, index)=> {
