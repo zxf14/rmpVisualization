@@ -1,7 +1,7 @@
 import React from 'react';
 import fetch from 'isomorphic-fetch'
 import { connect } from 'react-redux';
-import styles from './style.scss'
+import { browserHistory } from 'react-router'
 import Card from '../../components/Card'
 import { QUIZ_INDEX, QUIZ_TYPE } from '../../common/utils/constants'
 
@@ -18,16 +18,21 @@ class ExamPaperList extends React.Component {
 
     componentWillMount(){
         fetch(`/test/exam/getExamList?examId=${this.props.params.examId}`,{credentials:'include'})
-            .then(res=>res.json())
-            .then(json=>{
-                if(!json.success){
-                    this.props.dispatch(xinzhuToaster({
-                        type: 2,
-                        content: json.msg
-                    }))
+            .then(response => {
+                if(response.code == 401){
+                    browserHistory.push('/login')
                 } else {
-                    this.setState({
-                        paperList: json.data.exam,
+                    response.json().then(json=>{
+                        if(!json.success){
+                            this.props.dispatch(xinzhuToaster({
+                                type: 2,
+                                content: json.msg
+                            }))
+                        } else {
+                            this.setState({
+                                paperList: json.data.exam,
+                            })
+                        }
                     })
                 }
             });
@@ -41,10 +46,6 @@ class ExamPaperList extends React.Component {
                 return "(学生选择)"
             }
         }
-    };
-
-    jumpTo = (id) => {
-
     };
 
     render(){

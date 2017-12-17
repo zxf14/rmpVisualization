@@ -29,126 +29,12 @@ class ExamTotalPage extends React.Component {
             pageType:  PAGE_TYPE.TOTAL,
             chooseQuestionKey: null,
             isFetching: false,
-            title: '期中考试',
+            title: '',
             startTime: new Date(),
-            between: 2, //2小时
+            between: 0, //2小时
             remain: '', //剩余时间
 
             questionList: [],
-            //     [
-            //     {
-            //         content: '实体试题实体试题实体试题实体试题实体试题实体试题实体试题',
-            //         id: 1,
-            //         type: QUESTION_TYPE.SINGLE,
-            //         isMarked: false,
-            //         options: [
-            //             {
-            //                 id: 100,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             },
-            //             {
-            //                 id: 101,
-            //                 content: '选项选项',
-            //                 isChecked: true,
-            //             },
-            //             {
-            //                 id: 102,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             },
-            //             {
-            //                 id: 103,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             }
-            //         ]
-            //     },
-            //     {
-            //         content: '实体试题实体试题实体试题实体试题实体试题实体试题实体试题',
-            //         id: 2,
-            //         type: QUESTION_TYPE.MULTIPLE,
-            //         isMarked: false,
-            //         options: [
-            //             {
-            //                 id: 100,
-            //                 content: '选项选项',
-            //                 isChecked: true,
-            //             },
-            //             {
-            //                 id: 101,
-            //                 content: '选项选项',
-            //                 isChecked: true,
-            //             },
-            //             {
-            //                 id: 102,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             },
-            //             {
-            //                 id: 103,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             }
-            //         ]
-            //     },
-            //     {
-            //         content: '实体试题实体试题实体试题实体试题实体试题实体试题实体试题',
-            //         id: 3,
-            //         type: QUESTION_TYPE.SINGLE,
-            //         isMarked: false,
-            //         options: [
-            //             {
-            //                 id: 100,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             },
-            //             {
-            //                 id: 101,
-            //                 content: '选项选项',
-            //                 isChecked: true,
-            //             },
-            //             {
-            //                 id: 102,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             },
-            //             {
-            //                 id: 103,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             }
-            //         ]
-            //     },
-            //     {
-            //         content: '实体试题实体试题实体试题实体试题实体试题实体试题实体试题',
-            //         id: 3,
-            //         type: QUESTION_TYPE.SINGLE,
-            //         isMarked: false,
-            //         options: [
-            //             {
-            //                 id: 100,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             },
-            //             {
-            //                 id: 101,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             },
-            //             {
-            //                 id: 102,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             },
-            //             {
-            //                 id: 103,
-            //                 content: '选项选项',
-            //                 isChecked: false,
-            //             }
-            //         ]
-            //     }
-            // ]
         }
     }
 
@@ -160,10 +46,6 @@ class ExamTotalPage extends React.Component {
 
         const exam = this.props.exam;
         const questionList = this.props.exam.quizVOS;
-        const testeeId = this.props.testeeId;
-        // console.log(questionList, testeeId);
-        // const { questionList, startTime, between } = this.state;
-
         let newQuizList = [];
         console.log('question list out of if', questionList);
         if(questionList.length === 0){
@@ -310,24 +192,27 @@ class ExamTotalPage extends React.Component {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(submitList)
-        }).then(res=>res.json()).then(json=>{
-            if(!json.success){
-                this.props.dispatch(xinzhuToaster({
-                    type: 2,
-                    content: xinzhuInfo.exam.submitFail,
-                }))
-            }else{
-                this.props.dispatch(xinzhuToaster({
-                    type: 1,
-                    content: xinzhuInfo.exam.submitSuccess
-                }))
-                browserHistory.push('/student');
+        }).then(response => {
+            if(response.code == 401){
+                browserHistory.push('/login')
+            } else {
+                response.json().then(json=>{
+                    if(!json.success){
+                        this.props.dispatch(xinzhuToaster({
+                            type: 2,
+                            content: xinzhuInfo.exam.submitFail,
+                        }))
+                    }else{
+                        this.props.dispatch(xinzhuToaster({
+                            type: 1,
+                            content: xinzhuInfo.exam.submitSuccess
+                        }))
+                        browserHistory.push('/student');
 
+                    }
+                })
             }
         })
-
-
-
     }
 
     handleClickQuestion=(key)=>{
@@ -347,9 +232,7 @@ class ExamTotalPage extends React.Component {
     checkCandidate = (optionId) => {
         const { quizList, chooseQuestionKey } = this.state;
         const quiz = quizList[chooseQuestionKey];
-        console.log('check start', quiz);
         const options = quiz.question.optionVOList;
-        console.log('options', options)
         let newOptions = [];
         for(let i = 0; i < options.length; i++){
             const option = options[i];
@@ -364,9 +247,6 @@ class ExamTotalPage extends React.Component {
                 }
             }
         }
-
-        console.log('update option list', newOptions)
-
         let newQuizList = [];
         for(let i = 0; i < quizList.length; i++){
             const qz = quizList[i];
@@ -376,9 +256,6 @@ class ExamTotalPage extends React.Component {
                 newQuizList.push(qz);
             }
         }
-
-        console.log('check candidate', newQuizList);
-
         this.setState({
             quizList: newQuizList
         })

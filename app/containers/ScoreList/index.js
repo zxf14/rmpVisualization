@@ -30,20 +30,24 @@ class ScoreList extends React.Component {
     getScoreList = ()=>{
         let examId = this.props.params.examId;
         return fetch(`/test/testee/list?examId=${examId}`, {credentials: 'include'})
-        .then(response => response.json())
-            .then(json => {
-                if(!json.success) {
-                    this.props.dispatch(xinzhuToaster({
-                        type: 2,
-                        content: json.msg
-                    }));
-                    // browserHistory.push('/login');
+            .then(response => {
+                if(response.code == 401){
+                    browserHistory.push('/login')
                 } else {
-                    this.setState({
-                        report: json.data.report
-                    });
+                    response.json().then(json => {
+                        if(!json.success) {
+                            this.props.dispatch(xinzhuToaster({
+                                type: 2,
+                                content: json.msg
+                            }));
+                        } else {
+                            this.setState({
+                                report: json.data.report
+                            });
+                        }
+                    })
                 }
-            });
+            })
     };
 
     render() {
@@ -72,7 +76,7 @@ class ScoreList extends React.Component {
                                         <TableRow>
                                             <TableRowColumn>{item.studentName}</TableRowColumn>
                                             <TableRowColumn>{item.studentMail}</TableRowColumn>
-                                            <TableRowColumn>{item.score}</TableRowColumn>
+                                            <TableRowColumn>{item.score ? item.score : '弃考'}</TableRowColumn>
                                             <TableRowColumn><Link to={`/teacher/course/${courseId}/result/${examId}/${item.studentId}/${location.search}`}>查看详细成绩</Link></TableRowColumn>
                                         </TableRow>
                                     )
