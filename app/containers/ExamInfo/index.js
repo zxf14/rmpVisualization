@@ -1,13 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {xinzhuToaster} from '../../components/Toaster/actions';
-import xinzhuInfo from '../../components/Toaster/info';
-import {Link} from "react-router";
 import {browserHistory} from 'react-router';
-import styles from './style.scss'
-import Input from '../../components/Input';
 import Card from '../../components/Card';
-import Button from '../../components/Button';
+import { QUIZ_TYPE } from '../../common/utils/constants'
+
 
 const QUIZ_INDEX = ['A', 'B', 'C', 'D']
 class ExamInfo extends React.Component {
@@ -48,22 +45,26 @@ class ExamInfo extends React.Component {
             .catch(error => console.log(error));
     };
 
+
     render() {
         
         return (
             <div>
+                <h4>考试名：{this.props.title}</h4>
                 {
                     this.state.exam.questions 
                     && 
                     this.state.exam.questions.map((question, index) => {
+                        let title = `${index+1}.(${this.state.exam.value[index]}分) ${QUIZ_TYPE[question.type]}`
                         return (
-                            <Card style={{'margin': '10px'}}>
-                                <div>{index+1}.{question.content}</div>
+                            <Card title={title}>
+                                <div></div>
+                                <p>{question.content}</p>
                                 <div>
-                                    {question.optionVOList.map((option,index) => {
+                                    {question.optionVOList && question.optionVOList.map((option,key) => {
                                         return (
-                                            <div>
-                                                {QUIZ_INDEX[index]}.{option.content}
+                                            <div className={option.isRight?"right-answer":""}>
+                                                {QUIZ_INDEX[key]}.{option.content}{option.isRight?"(正确)":""}
                                             </div>
                                         )
                                     })}
@@ -78,9 +79,15 @@ class ExamInfo extends React.Component {
 
 }
 
-function mapStatetoProps(state) {
+function mapStatetoProps(state, props) {
+    console.log(state);
+    const exam = state.examList.items.filter((v)=>{
+        return v.id == props.params.examId
+    })[0];
+    const title = exam.title;
   
     return {
+        title,
     };
 }
 

@@ -160,7 +160,10 @@ class ExamList extends React.Component {
         const isStudent = this.isStudent();
         switch(state){
             case EXAM_STATE.NOT_START:
-                return null;
+                return isStudent ?
+                    null
+                    :
+                    <Link to={`/teacher/course/${this.props.params.courseId}/examInfo/${id}/${location.search}`}>查看考试</Link>;
             case EXAM_STATE.ONGOING:
                 return isStudent ?
                     <a

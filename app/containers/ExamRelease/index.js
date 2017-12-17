@@ -6,16 +6,12 @@ import {Link} from "react-router";
 import {browserHistory} from 'react-router';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from '../../components/Table'
 import {
-    Checkbox,
-    CheckboxList,
-    Col,
     ControlLabel,
     FormControl,
     FormGroup,
-    Radio,
-    RadioList,
-    Row,
-    Dropdown
+    Dropdown,
+    Whisper,
+    Popover
 } from "rsuite";
 import Input from '../../components/Input';
 import Card from '../../components/Card';
@@ -141,6 +137,7 @@ class ExamRelease extends React.Component {
 
     render() {
         let info = this.state;
+
         return (
             <div className='flex-container'>
                 <div style={{flexGrow: 1}}>
@@ -200,9 +197,24 @@ class ExamRelease extends React.Component {
                                     }
                                 });
 
-                                return ( 
+                                const speaker = (
+                                    <Popover>
+                                        <p>{question.content}</p>
+                                        {question.optionVOList.map((option, index)=>{
+                                            return (
+                                                <p className={option.isRight?"right-answer":""}>{QUIZ_INDEX[index]}.{option.content}</p>
+                                            )
+                                        })}
+                                    </Popover>
+                                );
+
+                                return (
                                     <TableRow>
-                                        <TableRowColumn>{question.content}</TableRowColumn>
+                                        <TableRowColumn>
+                                            <Whisper placement="right" speaker={speaker}>
+                                                <p>{question.content}</p>
+                                            </Whisper>
+                                        </TableRowColumn>
                                         <TableRowColumn>{rightAnswers}</TableRowColumn>
                                         <TableRowColumn>{question.type===0?'单选题':'多选题'}</TableRowColumn>
                                         <TableRowColumn>{question.point}</TableRowColumn>
@@ -234,9 +246,23 @@ class ExamRelease extends React.Component {
                                         return QUIZ_INDEX[k]
                                     }
                                 });
-                                return ( 
+                                const speaker = (
+                                    <Popover>
+                                        <p>{question.content}</p>
+                                        {question.optionVOList.map((option, index)=>{
+                                            return (
+                                                <p className={option.isRight?"right-answer":""}>{QUIZ_INDEX[index]}.{option.content}</p>
+                                            )
+                                        })}
+                                    </Popover>
+                                );
+                                return (
                                     <TableRow>
-                                        <TableRowColumn>{question.content}</TableRowColumn>
+                                        <TableRowColumn>
+                                            <Whisper placement="right" speaker={speaker}>
+                                                <p>{question.content}</p>
+                                            </Whisper>
+                                        </TableRowColumn>
                                         <TableRowColumn>{rightAnswers}</TableRowColumn>
                                         <TableRowColumn>{question.type===0?'单选题':'多选题'}</TableRowColumn>
                                         <TableRowColumn>
@@ -248,7 +274,9 @@ class ExamRelease extends React.Component {
                                             }/>
                                         </TableRowColumn>
                                         <TableRowColumn><span style={{'cursor': 'pointer'}} onClick={()=>this.add_question(index)}>添加</span></TableRowColumn>
+
                                     </TableRow>
+
                                     )
                                 })
                             }
