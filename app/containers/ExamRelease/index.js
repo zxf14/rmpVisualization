@@ -25,14 +25,13 @@ class ExamRelease extends React.Component {
         super(props);
         this.state = {
             questionList:[],
-            selected:[],
-            unSelected:[],
-            scores:[],
+            scores:0,
             examTitle:"",
             examPlace:"",
             startTime:"",
             endTime:"",
-            group:"",
+            group:"-1",
+            questionNum:0,
         }
     }
 
@@ -40,27 +39,10 @@ class ExamRelease extends React.Component {
         this.getQuestions();
     }
 
-    remove_question = (index) => {
-        let list = [...this.state.selected];
-        list.splice(index, 1);
-        this.setState({selected:list});
-    };
-
-    add_question = (index) => {
-        let obj = this.state.questionList[index];
-        obj.point = this.state.scores[index]||0;
-        this.setState({
-            selected: [...this.state.selected, obj],
-        })
-    };
-
     submit = () => {
-        const submitScores = this.state.selected.map((v)=>{
-            return v.point;
-        })
         let data = {
-            questionNum: this.state.selected.length,
-            scores: submitScores,
+            questionNum: this.state.questionNum,
+            scores: this.state.scores,
             groupId: this.state.group,
             courseId: this.getCourseId(),
             questions: this.state.selected,
@@ -123,11 +105,8 @@ class ExamRelease extends React.Component {
                                     content: json.msg
                                 }));
                             } else {
-                                let scores = json.data.questions.map(i=>0);
                                 this.setState({
                                     questionList: json.data.questions,
-                                    unSelected: json.data.questions,
-                                    scores:scores,
                                 });
                             }
                         });
@@ -162,6 +141,18 @@ class ExamRelease extends React.Component {
                                      onChange={value => this.setState({endTime:value})}/>
                     </FormGroup>
 
+                    <FormGroup controlId='questionNum' value={info.questionNum}>
+                        <ControlLabel>考题数量（题库数量：{info.questionList ? info.questionList.length : '0'}）</ControlLabel>
+                        <FormControl type='number' value={info.questionNum}
+                                     onChange={value => this.setState({questionNum:value})}/>
+                    </FormGroup>
+
+                    <FormGroup controlId='scores' value={info.scores}>
+                        <ControlLabel>考题分值</ControlLabel>
+                        <FormControl type='number' value={info.scores}
+                                     onChange={value => this.setState({scores:value})}/>
+                    </FormGroup>
+
                     <div>
                         <label>考试学生</label>
                         <Dropdown style={{margin: '5px 15px 5px 5px'}}
@@ -178,110 +169,6 @@ class ExamRelease extends React.Component {
                         </Dropdown> 
                     </div>
 
-                    <Table id="selected_questions" title="已选试题">
-                        <TableHeader>
-                            <TableRow header={true}>
-                                <TableHeaderColumn width="40%">标题</TableHeaderColumn>
-                                <TableHeaderColumn width="10%">正确答案</TableHeaderColumn>
-                                <TableHeaderColumn width="15%">类型</TableHeaderColumn>
-                                <TableHeaderColumn width="20%">分值</TableHeaderColumn>
-                                <TableHeaderColumn width="15%">移除</TableHeaderColumn>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {
-                            this.state.selected.map((question, index) => {
-                                const rightAnswers = question.optionVOList.map((v,k)=>{
-                                    if(v.isRight){
-                                        return QUIZ_INDEX[k]
-                                    }
-                                });
-
-                                const speaker = (
-                                    <Popover>
-                                        <p>{question.content}</p>
-                                        {question.optionVOList.map((option, index)=>{
-                                            return (
-                                                <p className={option.isRight?"right-answer":""}>{QUIZ_INDEX[index]}.{option.content}</p>
-                                            )
-                                        })}
-                                    </Popover>
-                                );
-
-                                return (
-                                    <TableRow>
-                                        <TableRowColumn>
-                                            <Whisper placement="right" speaker={speaker}>
-                                                <p>{question.content}</p>
-                                            </Whisper>
-                                        </TableRowColumn>
-                                        <TableRowColumn>{rightAnswers}</TableRowColumn>
-                                        <TableRowColumn>{question.type===0?'单选题':'多选题'}</TableRowColumn>
-                                        <TableRowColumn>{question.point}</TableRowColumn>
-                                        <TableRowColumn><span style={{'cursor': 'pointer'}} onClick={()=>this.remove_question(index)}>移除问题</span></TableRowColumn>
-                                    </TableRow>
-                                )
-                            })
-                            }
-                        </TableBody>
-                    </Table>
-
-                    <br/>
-
-                    <Table id="questions" title="待选试题">
-                        <TableHeader>
-                            <TableRow header={true}>
-                                <TableHeaderColumn width="40%">题目</TableHeaderColumn>
-                                <TableHeaderColumn width="10%">正确答案</TableHeaderColumn>
-                                <TableHeaderColumn width="15%">类型</TableHeaderColumn>
-                                <TableHeaderColumn width="20%">分值</TableHeaderColumn>
-                                <TableHeaderColumn width="15%">添加</TableHeaderColumn>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {
-                            this.state.unSelected.map((question, index) => {
-                                const rightAnswers = question.optionVOList.map((v,k)=>{
-                                    if(v.isRight){
-                                        return QUIZ_INDEX[k]
-                                    }
-                                });
-                                const speaker = (
-                                    <Popover>
-                                        <p>{question.content}</p>
-                                        {question.optionVOList.map((option, index)=>{
-                                            return (
-                                                <p className={option.isRight?"right-answer":""}>{QUIZ_INDEX[index]}.{option.content}</p>
-                                            )
-                                        })}
-                                    </Popover>
-                                );
-                                return (
-                                    <TableRow>
-                                        <TableRowColumn>
-                                            <Whisper placement="right" speaker={speaker}>
-                                                <p>{question.content}</p>
-                                            </Whisper>
-                                        </TableRowColumn>
-                                        <TableRowColumn>{rightAnswers}</TableRowColumn>
-                                        <TableRowColumn>{question.type===0?'单选题':'多选题'}</TableRowColumn>
-                                        <TableRowColumn>
-                                            <FormControl type='number' value={this.state.scores[index]||0}
-                                            onChange={(value) => {
-                                                let newScore = this.state.scores;
-                                                newScore[index] = parseInt(value);
-                                                this.setState({scores:newScore})}
-                                            }/>
-                                        </TableRowColumn>
-                                        <TableRowColumn><span style={{'cursor': 'pointer'}} onClick={()=>this.add_question(index)}>添加</span></TableRowColumn>
-
-                                    </TableRow>
-
-                                    )
-                                })
-                            }
-                        </TableBody>
-                    </Table>
                 </div>
                 <aside>
                     <Card title="发布">
