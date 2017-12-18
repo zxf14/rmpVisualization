@@ -91,7 +91,7 @@ class ExamResultPage extends React.Component {
                 </div>
                 {
                 	this.state.exam.questions && this.state.exam.questions.map((question, index)=> {
-                        let title = `${index+1}.(${this.state.exam.value}分) ${QUIZ_TYPE[question.type]} 得分：${answers[index]?answers[index].score:0}` 
+                        let title = `${index+1}.(${this.state.exam.value}分) ${QUIZ_TYPE[question.type]} 得分：${answers[index]?answers[index].score:0}`
                 		return (
                 			<Card title={title}>
                 				<div></div>
