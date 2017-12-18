@@ -23,6 +23,10 @@ class ScoreList extends React.Component {
         this.getScoreList();
     }
 
+    beforeExam = () => {
+        return location.search != "";
+    }
+
     exportReport = () => {
         browserHistory.push(`/teacher/course/${this.props.params.courseId}/paperList/${this.props.params.examId}`)
     };
@@ -77,7 +81,14 @@ class ScoreList extends React.Component {
                                             <TableRowColumn>{item.studentName}</TableRowColumn>
                                             <TableRowColumn>{item.studentMail}</TableRowColumn>
                                             <TableRowColumn>{item.score ? item.score : '弃考'}</TableRowColumn>
-                                            <TableRowColumn><Link to={`/teacher/course/${courseId}/result/${examId}/${item.studentId}/${location.search}`}>查看详细成绩</Link></TableRowColumn>
+                                            <TableRowColumn>
+                                            {
+                                                this.beforeExam() && <Link to={`/teacher/course/${courseId}/examInfo/${examId}/${item.id}`}>查看试卷</Link>
+                                            }
+                                            {
+                                                !this.beforeExam() && <Link to={`/teacher/course/${courseId}/result/${examId}/${item.studentId}`}>查看详细成绩</Link>
+                                            }
+                                            </TableRowColumn>
                                         </TableRow>
                                     )
                                 })

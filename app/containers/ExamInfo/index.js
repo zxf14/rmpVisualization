@@ -5,7 +5,6 @@ import {browserHistory} from 'react-router';
 import Card from '../../components/Card';
 import { QUIZ_TYPE } from '../../common/utils/constants'
 
-
 const QUIZ_INDEX = ['A', 'B', 'C', 'D']
 class ExamInfo extends React.Component {
 
@@ -22,7 +21,8 @@ class ExamInfo extends React.Component {
 
     getExamInfo = () => {
         let examId = this.props.params.examId;
-        fetch(`/test/exam/teacherCreate/?examId=${examId}`, {credentials: 'include'})
+        let studentId = this.props.params.studentId;
+        fetch(`/test/exam/teacherCreate/?examId=${examId}&testeeId=${studentId}`, {credentials: 'include'})
         .then(response => {
                 if(response.status == 401) {
                     browserHistory.push("/login");
@@ -55,7 +55,7 @@ class ExamInfo extends React.Component {
                     this.state.exam.questions 
                     && 
                     this.state.exam.questions.map((question, index) => {
-                        let title = `${index+1}.(${this.state.exam.value[index]}分) ${QUIZ_TYPE[question.type]}`
+                        let title = `${index+1}.(${this.state.exam.value}分) ${QUIZ_TYPE[question.type]}`
                         return (
                             <Card title={title}>
                                 <div></div>

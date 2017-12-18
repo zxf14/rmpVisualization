@@ -150,7 +150,7 @@ class ExamRelease extends React.Component {
                     <FormGroup controlId='scores' value={info.scores}>
                         <ControlLabel>考题分值</ControlLabel>
                         <FormControl type='number' value={info.scores}
-                                     onChange={value => this.setState({scores:value})}/>
+                                     onChange={value => this.setState({scores:parseInt(value)})}/>
                     </FormGroup>
 
                     <div>

@@ -163,7 +163,7 @@ class ExamList extends React.Component {
                 return isStudent ?
                     null
                     :
-                    <Link to={`/teacher/course/${this.props.params.courseId}/examInfo/${id}/${location.search}`}>查看考试</Link>;
+                    <Link to={`/teacher/course/${this.props.params.courseId}/scoreList/${id}/?type=1`}>查看试卷</Link>;
             case EXAM_STATE.ONGOING:
                 return isStudent ?
                     <a
@@ -176,7 +176,7 @@ class ExamList extends React.Component {
                         参加考试
                     </a>
                     :
-                    <Link to={`/teacher/course/${this.props.params.courseId}/examInfo/${id}/${location.search}`}>查看考试</Link>;
+                    <Link to={`/teacher/course/${this.props.params.courseId}/scoreList/${id}/?type=1`}>查看试卷</Link>;
             case EXAM_STATE.FINISHED:
                 return isStudent ?
                         <Link to={`/student/result/${id}/${localStorage.studentNo}/${location.search}`}>查看成绩</Link>

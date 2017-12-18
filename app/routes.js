@@ -34,7 +34,7 @@ export default (
             <Route path="groups" component={Groups}/>
             <Route path="course" component={Course}>
                 <Route path=":courseId/exam" component={ExamList}/>
-                <Route path=":courseId/examInfo/:examId" component={ExamInfo}/>
+                <Route path=":courseId/examInfo/:examId/:studentId" component={ExamInfo}/>
                 <Route path=":courseId/questions" component={Questions}/>
                 <Route path=":courseId/examRelease" component={ExamRelease}/>
                 <Route path=":courseId/result/:examId/:studentId" component={ExamResultPage}/>
